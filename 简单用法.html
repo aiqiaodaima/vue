@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="app">
+			<p v-if="seen">现在你看到我了</p>
+			<p v-else>隐藏隐藏隐藏隐藏</p>
+			<button @click="change()">逆转消息</button>
+		</div>
+		
+	</body>
+	<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		new Vue({
+			el:'#app',
+			data:{
+				seen : true
+			},
+			methods:{
+				change:function  () {					
+						this.seen = !this.seen
+				}
+			}
+		})
+	</script>
+</html>
