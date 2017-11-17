@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		.fade-enter-active, .fade-leave-active {
+		  transition: opacity .5s
+		}
+		.fade-enter, .fade-leave-to /* .fade-leave-active 在低于版本 2.1.8 中 */ {
+		  opacity: 0
+		}
+		.slide-fade-enter-active {
+		  transition: all .3s ease;
+		}
+		.slide-fade-leave-active {
+		  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+		}
+		.slide-fade-enter, .slide-fade-leave-to
+		/* .slide-fade-leave-active 在低于 2.1.8 版本中 */ {
+		  transform: translateX(10px);
+		  opacity: 0;
+		}
+		.bounce-enter-active {
+		  animation: bounce-in .5s;
+		}
+		.bounce-leave-active {
+		  animation: bounce-in .5s reverse;
+		}
+		@keyframes bounce-in {
+		  0% {
+		    transform: scale(0);
+		  }
+		  50% {
+		    transform: scale(1.5);
+		  }
+		  100% {
+		    transform: scale(1);
+		  }
+		}
+	</style>
+	<body>
+		<div id="demo">
+			<button v-on:click="show = !show">
+				Toggle
+			</button>		
+			<transition name ="fade">
+				<p v-if="show">Hello!</p>
+			</transition>
+			<transition name ="slide-fade">
+				<p v-if="show">Hello!</p>
+			</transition>
+			<transition name="bounce">
+			    <p v-if="show">Look at me!</p>
+			</transition>
+		</div>
+	</body>
+	<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		new Vue({
+			el:"#demo",
+			data:{
+				show:true
+			}
+		})
+	</script>
+</html>
