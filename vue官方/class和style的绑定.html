@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Class 与 Style 绑定</title>
+</head>
+<body>
+    <div id="app">
+        <div class="static" v-bind:class = "{active: isActive, 'text-danger': hasError}">结果渲染为：static和active</div>
+        <div :class = "classObject">结果渲染为：active</div>
+        <!-- <div v-bind:class="classObject2"></div>
+        <div v-bind:class="[activeClass, errorClass]"></div> -->
+
+        <!-- 组件中添加class -->
+        <my-component class="baz boo" v-bind:class="{ active: isActive2 }"></my-component>
+
+        <!-- 对象语法 -->
+        <div :style = "{color: activeColor,fontSize: fontSize + 'px'}">对象语法1</div>
+        <div :style = "styleObject">对象语法2</div>
+
+        <!-- 数组语法 -->
+        <!-- <div :style = "[baseStyles, overridingStyles]">数组语法</div> -->
+    </div>
+</body>
+<script src="https://cdn.bootcss.com/vue/2.4.2/vue.js"></script>
+<script>
+    Vue.component('my-component', {
+        template: '<p class="foo bar">组件</p>'
+    })
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            styleObject: {
+                color: 'red',
+                fontSize: '13px'
+            },
+            classObject: {
+                active: true,
+                'text-danger': false,
+                error: null,
+                activeColor: 'red',
+                fontSize: 30
+            },
+            isActive: true,
+            hasError: false,
+            isActive2: true,
+            activeColor: "green",
+            fontSize: "34px"
+        },
+        computed: {
+            classObject2: function () {
+                return {
+                active: this.isActive && !this.error,
+                'text-danger': this.error && this.error.type === 'fatal'
+                }
+            }
+        }
+       
+    })
+</script>
+</html>
