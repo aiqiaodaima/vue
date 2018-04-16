@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="example">
+        <!-- 监听事件 -->
+        <button v-on:click = "count += 1">click add count</button>
+        <p>{{count}}times</p>
+
+        <!-- 事件处理方法 -->
+        <button v-on:click="greet">Greet</button>
+
+        <!-- 内联处理器中的方法 -->
+        <button @click = say("你好帅")>内联用法</button>
+
+        <button v-on:click="warn('Form cannot be submitted yet.', $event)">
+            Submit
+        </button>
+    </div>
+</body>
+<script src="https://cdn.bootcss.com/vue/2.4.2/vue.js"></script>
+<script>
+    const vm = new Vue({
+        el: "#example",
+        data: {
+            count: 0
+        },
+        methods: {
+            greet: function () {
+                this.count += 2
+            },
+            say: function (message) {
+                alert("我喜欢听" + message);
+                console.log(`我喜欢听${message}对吗？`)
+            },
+            warn: function (message, event) {
+                // 现在我们可以访问原生事件对象
+                if (event){
+                    event.preventDefault()
+                    console.info(event)
+                } 
+                alert(message)
+            }
+        }
+    })
+</script>
+</html>
