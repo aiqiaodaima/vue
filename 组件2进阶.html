@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue组件</title>
+</head>
+
+<body>
+    <div id="vueInstance">
+        <div class="container">
+            <ul>
+                <!-- 这里即将渲染出评论的投票列表 -->
+                <post v-for="post in posts" :post="post"></post>
+            </ul>
+        </div>
+    </div>
+
+    </template>
+    <template id="postTpl">
+        <li>
+            <i class="up" @click="upvote">我支持</i>
+            <span>票数： {{ post.votes }}</span>
+            <i class="down" @click="downvote">我反对</i>
+            <a>话题： {{ post.title }}</a>
+        </li>
+    </template>
+
+</body>
+<script src="http://cdn.jsdelivr.net/vue/1.0.16/vue.js"></script>
+<script>
+    Vue.component('post', {
+        template: '#postTpl',
+        props: ['post'],
+        data: function () {
+            return {  //data必须为function，定义投票状态
+                upvoted: false,
+                downvoted: false
+            }
+        },
+        methods: {
+            upvote: function () { //点击赞成的事件
+                this.upvoted = !this.upvoted;
+                this.downvoted = false;
+            },
+            downvote: function () { //点击反对的事件
+                this.downvoted = !this.downvoted;
+                this.upvoted = false;
+            }
+        },
+        computed: {  //重点部分
+            votes: function () {
+                if (this.upvoted) {
+                    return this.post.votes + 1;
+                } else if (this.downvoted) {
+                    return this.post.votes - 1;
+                } else {
+                    return this.post.votes;
+                }
+            }
+        }
+    });
+    var vm = new Vue({
+        el: '#vueInstance',
+        data: {
+            posts: [{
+                title: '请大大多多为我投票，我给大家发红包',
+                votes: 15
+            }, {
+                title: '投我准没错',
+                votes: 53
+            }, {
+                title: '不要投给我楼上的',
+                votes: 10
+            }]
+        }
+    })
+</script>
+
+</html>

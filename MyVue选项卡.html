@@ -1,75 +1,52 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title></title>
-		<style type="text/css">
-			*{
-				margin: 0;
-				padding: 0;
-				box-sizing: border-box;
-				/*margin: auto;*/
-			}
-			.head1{
-				width: 100px;
-				height: 40px;
-				background-color: #444;
-				float: left;
-				color: #42B983;
-				font: 20px;
-			}
-			.body1{
-				width: 300px;
-				height: 200px;
-				border: 1px solid red;
-				/*float: left;*/
-			}
-			.clearfix:after{
-				display: table;
-			    content: " ";
-			    clear: both;
-			}
-		</style>
-	</head>
-	<body>
-		<div id="app">
-			<ul class="clearfix">
-				<li v-for=" (head,index) in tables" @click="change(index)" class="head1">{{head.item}}</li>				
-			</ul>
-			<div v-for=" (body,index) in tables" class="body1"  @click="show(index)" :data-id="index">{{body.item}}</div>
-		</div>
-	</body>
-	<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript">
-		var vue = new Vue({
-			el:'#app',
-			data(){
-				return {
-					tables:[
-						{item:'html'},
-						{item:'css'},
-						{item:'JS'}
-					],
-					divs:[
-						{item:'html'},
-						{item:'css'},
-						{item:'JS'}
-					],
-					showName:true
-				}
-			},
-			
-			methods:{
-				change:function (index) {
-//					if (this.index == data-id) {
-//						showName = false
-//					}
-				},
-//				show:function (index) {
-//					console.log(index	)
-//				}
-	
-			}
-		})
-	</script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>选项卡</title>
+	<script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <style>
+        li{
+            list-style: none;
+            float: left;
+            margin-right: 20px;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <ul>
+            <li v-for="(item,index) in list" @click="tab(index)">
+				{{item.tab}}
+                <div v-show="item.show">
+                    {{item.title}}
+                </div>
+            </li>
+        </ul>
+    </div>
+    <script>
+        let obj=[
+            {"tab":"选项一","show":true,"title":"1111"},
+            {"tab":"选项二","show":false,"title":"2222"},
+            {"tab":"选项三","show":false,"title":"3333"}
+        ];
+
+        var vm=new Vue({
+            el:".app",
+            data:{
+                list:obj
+            },
+            methods:{
+                tab:function(index){
+                    for(var i=0;i<this.list.length;i++){
+                        this.list[i].show=false;
+                        if(i==index){
+                            this.list[index].show=true;
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
 </html>
